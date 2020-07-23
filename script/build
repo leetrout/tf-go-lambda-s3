@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Location of script
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+ZIP=myfunc.zip
+BIN=myfunc
+
+cd ${HERE}/..
+
+rm -rf build
+mkdir build
+cd build
+
+GOOS=linux go build -o ${BIN} ../go/...
+zip ${ZIP} ${BIN}
+
+echo "Created deployable package '${BIN}' at ${PWD}/${ZIP}"
