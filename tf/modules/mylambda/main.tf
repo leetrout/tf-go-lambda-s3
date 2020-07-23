@@ -11,15 +11,16 @@ resource "aws_iam_policy" "lambda_exec" {
   path        = "/"
   description = "IAM policy for logging from a lambda and s3 access"
 
-  policy = file("${path.module}/policies/execution_role.json")
+  policy = templatefile("${path.module}/policies/execution_role.json", {
+    input-bucket = var.input_bucket_name,
+    output-bucket = var.output_bucket_name,
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_exec" {
   role       = aws_iam_role.lambda_exec_role.name
   policy_arn = aws_iam_policy.lambda_exec.arn
 }
-
-
 
 resource "aws_iam_role" "lambda_exec_role" {
   name = "iam_for_lambda"

@@ -2,3 +2,4 @@ build/
 *.env*
 !.env.sample
 .terraform
+terraform.tfstate*
